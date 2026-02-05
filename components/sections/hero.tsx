@@ -22,7 +22,7 @@ export function HeroSection() {
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden will-change-transform"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden will-change-transform pt-24"
     >
       {/* Full Screen Background Image - GPU accelerated */}
       <motion.div 
