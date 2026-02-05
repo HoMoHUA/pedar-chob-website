@@ -1,41 +1,32 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
+import { useRef } from "react"
 import Image from "next/image"
-import { motion, useScroll, useTransform, useSpring } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { ArrowDown, Sparkles } from "lucide-react"
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [isLoaded, setIsLoaded] = useState(false)
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   })
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95])
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
-  
-  const springY = useSpring(y, { stiffness: 100, damping: 30 })
-  const springOpacity = useSpring(opacity, { stiffness: 100, damping: 30 })
-  const springScale = useSpring(scale, { stiffness: 100, damping: 30 })
-
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
+  // Direct transforms for smoother, lag-free scroll performance
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 80])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0])
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.03])
 
   return (
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden will-change-transform"
     >
-      {/* Full Screen Background Image */}
+      {/* Full Screen Background Image - GPU accelerated */}
       <motion.div 
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 will-change-transform"
         style={{ scale: imageScale }}
       >
         <Image
@@ -53,33 +44,11 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(26,43,76,0.4)_100%)]" />
       </motion.div>
 
-      {/* Animated Background Effects */}
-      <div className="absolute inset-0 z-[1]">
-        {/* Gradient Orbs */}
-        <motion.div
-          className="absolute top-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-white/3 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
+      {/* Subtle Background Effects - optimized for performance */}
+      <div className="absolute inset-0 z-[1] pointer-events-none">
+        {/* Static gradient orbs - no animation for better performance */}
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-2xl opacity-40" />
+        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-white/3 rounded-full blur-2xl opacity-30" />
         
         {/* Grid Pattern */}
         <div 
@@ -94,10 +63,10 @@ export function HeroSection() {
         />
       </div>
 
-      {/* Content */}
+      {/* Content - GPU accelerated for smooth scrolling */}
       <motion.div
-        className="relative z-[2] max-w-5xl mx-auto px-6 text-center"
-        style={{ y: springY, opacity: springOpacity, scale: springScale }}
+        className="relative z-[2] max-w-5xl mx-auto px-6 text-center will-change-transform"
+        style={{ y: contentY, opacity: contentOpacity }}
       >
         {/* Badge */}
         <motion.div
