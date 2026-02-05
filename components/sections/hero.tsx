@@ -1,11 +1,14 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
+import Image from "next/image"
 import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import { ArrowDown, Sparkles } from "lucide-react"
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [isLoaded, setIsLoaded] = useState(false)
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
@@ -14,10 +17,15 @@ export function HeroSection() {
   const y = useTransform(scrollYProgress, [0, 1], [0, 200])
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95])
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
   
   const springY = useSpring(y, { stiffness: 100, damping: 30 })
   const springOpacity = useSpring(opacity, { stiffness: 100, damping: 30 })
   const springScale = useSpring(scale, { stiffness: 100, damping: 30 })
+
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
 
   return (
     <section
@@ -25,8 +33,28 @@ export function HeroSection() {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Animated Background */}
-      <div className="absolute inset-0">
+      {/* Full Screen Background Image */}
+      <motion.div 
+        className="absolute inset-0 z-0"
+        style={{ scale: imageScale }}
+      >
+        <Image
+          src="/images/hero-furniture.jpg"
+          alt="مبلمان لوکس پدر چوب"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+          quality={90}
+        />
+        {/* Dark Overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A2B4C]/70 via-[#1A2B4C]/60 to-[#1A2B4C]/90" />
+        {/* Additional vignette effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(26,43,76,0.4)_100%)]" />
+      </motion.div>
+
+      {/* Animated Background Effects */}
+      <div className="absolute inset-0 z-[1]">
         {/* Gradient Orbs */}
         <motion.div
           className="absolute top-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl"
@@ -68,7 +96,7 @@ export function HeroSection() {
 
       {/* Content */}
       <motion.div
-        className="relative z-10 max-w-5xl mx-auto px-6 text-center"
+        className="relative z-[2] max-w-5xl mx-auto px-6 text-center"
         style={{ y: springY, opacity: springOpacity, scale: springScale }}
       >
         {/* Badge */}
