@@ -54,7 +54,12 @@ export function Header() {
             transition={{ type: "spring", stiffness: 200, damping: 25 }}
           >
             <motion.div
-              className="max-w-7xl mx-auto glass rounded-2xl border border-white/10"
+              className="max-w-7xl mx-auto rounded-2xl border border-white/10"
+              style={{
+                background: "rgba(26, 43, 76, 0.7)",
+                backdropFilter: "blur(16px) saturate(180%)",
+                WebkitBackdropFilter: "blur(16px) saturate(180%)",
+              }}
               layoutId="header-container"
             >
               <div className="relative px-6 py-4">
@@ -187,15 +192,20 @@ export function Header() {
         )}
       </AnimatePresence>
 
-      {/* Collapsed Button (shown after scroll) */}
+      {/* Collapsed Button (shown after scroll) - positioned on right for RTL */}
       <AnimatePresence>
         {isCollapsed && !isExpanded && (
           <motion.button
-            className="fixed top-4 left-4 z-50 glass w-14 h-14 rounded-2xl flex items-center justify-center border border-white/20 shadow-lg shadow-black/20"
+            className="fixed top-4 right-4 z-50 w-14 h-14 rounded-2xl flex items-center justify-center border border-white/20 shadow-lg shadow-black/20"
+            style={{
+              background: "rgba(26, 43, 76, 0.7)",
+              backdropFilter: "blur(16px) saturate(180%)",
+              WebkitBackdropFilter: "blur(16px) saturate(180%)",
+            }}
             onClick={toggleExpanded}
-            initial={{ opacity: 0, scale: 0.5, x: 20 }}
+            initial={{ opacity: 0, scale: 0.5, x: -20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.5, x: 20 }}
+            exit={{ opacity: 0, scale: 0.5, x: -20 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}

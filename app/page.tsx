@@ -10,7 +10,7 @@ import { ContactSection } from "@/components/sections/contact"
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen overflow-x-hidden">
       {/* Fixed Header */}
       <Header />
 

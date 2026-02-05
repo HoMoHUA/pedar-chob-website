@@ -74,7 +74,7 @@ export function GallerySection() {
   }
 
   return (
-    <section id="gallery" className="py-24 relative" ref={containerRef}>
+    <section id="gallery" className="py-24 relative overflow-hidden" ref={containerRef}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <motion.div

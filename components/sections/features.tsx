@@ -42,7 +42,7 @@ export function FeaturesSection() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
 
   return (
-    <section id="features" className="py-24 relative" ref={containerRef}>
+    <section id="features" className="py-24 relative overflow-hidden" ref={containerRef}>
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/[0.02] rounded-full blur-3xl" />

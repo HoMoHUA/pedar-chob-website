@@ -33,7 +33,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 relative" ref={containerRef}>
+    <section id="contact" className="py-24 relative overflow-hidden" ref={containerRef}>
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-3xl" />
